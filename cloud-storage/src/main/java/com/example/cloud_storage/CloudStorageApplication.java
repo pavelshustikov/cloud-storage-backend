@@ -3,6 +3,13 @@ package com.example.cloud_storage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.cloud_storage.service.FileService;
+import com.example.cloud_storage.service.AuthService; // Добавляем импорт AuthService
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder; // Добавляем импорт PasswordEncoder
+
 @SpringBootApplication
 public class CloudStorageApplication {
 
@@ -10,4 +17,19 @@ public class CloudStorageApplication {
 		SpringApplication.run(CloudStorageApplication.class, args);
 	}
 
+	// Добавляем бин CommandLineRunner для инициализации при старте
+	@Bean
+	public CommandLineRunner init(FileService fileService, AuthService authService, PasswordEncoder passwordEncoder) {
+		return args -> {
+			fileService.init(); // Инициализация папки для хранения файлов
+			// Опционально: Регистрация тестовых пользователей при старте
+			// Можно закомментировать после первого запуска, чтобы избежать ошибок "пользователь уже существует"
+			if (authService.getUserRepository().findByUsername("user1").isEmpty()) { // Проверяем, что пользователя нет
+				authService.registerUser("user1", "password");
+			}
+			if (authService.getUserRepository().findByUsername("user2").isEmpty()) {
+				authService.registerUser("user2", "strong_password");
+			}
+		};
+	}
 }

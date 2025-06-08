@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data // Генерирует геттеры, сеттеры, toString, equals, hashCode
 @Builder // Генерирует Builder-паттерн
 @NoArgsConstructor // Генерирует конструктор без аргументов
