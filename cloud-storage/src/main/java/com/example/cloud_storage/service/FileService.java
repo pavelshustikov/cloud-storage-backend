@@ -96,4 +96,8 @@ public class FileService {
                 .map(file -> new FileResponse(file.getFilename(), file.getSize()))
                 .collect(Collectors.toList());
     }
+
+    public void setFileStorageLocation(String fileStorageLocation) {
+        this.fileStorageLocation = fileStorageLocation;
+    }
 }

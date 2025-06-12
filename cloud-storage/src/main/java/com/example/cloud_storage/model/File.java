@@ -35,4 +35,10 @@ public class File {
     @ManyToOne(fetch = FetchType.LAZY) // Много файлов может принадлежать одному пользователю
     @JoinColumn(name = "user_id", nullable = false) // Внешний ключ к таблице users
     private User user;
+
+    @Lob // Large Object. Указывает, что поле должно храниться как большой объект (для byte[] это будет тип BYTEA в PostgreSQL)
+    @Column(columnDefinition = "BYTEA") // Явно указываем тип колонки в БД
+    private byte[] content; // <--- ВОТ ЭТО ПОЛЕ
+
+
 }
